@@ -1,4 +1,4 @@
-<!doctype html>
+<html lang="en" !doctype>
 <head>
   <meta charset="utf-8">
   <title>Game Test</title>
@@ -8,10 +8,44 @@
 <script type="text/javascript" src="./javascript/exchange.js"></script>
 <script type="text/javascript" src="./javascript/storage-manager.js"></script>
 <script type="text/javascript" src="./javascript/game-utility.js"></script>
+<script type="text/javascript" src="./javascript/rtc-connection.js"></script>
 <body>
   <button onclick="newGame();" name="button-name" title="button-title" id="new-game-button">New Game</button>&nbsp;<label title="new-game-label" type="text" id="new-game-label" name="new-game-label"></label><br><br>
   ID: <input title="join-game-input" type="text" id="join-game-input" name="join-game-input"></input>&nbsp;&nbsp;
-  <button onclick="joinGame();" name="join-game-button-name" title="join-game-button-title" id="join-game-button">Join Game</button>
+  <button onclick="joinGame();" name="join-game-button-name" title="join-game-button-title" id="join-game-button">Join Game</button><br><br>
 
+  <h3> 1.CREATE Offer's SDP </h3>
+  <textarea id="creater-sdp" title="create offer"></textarea>&nbsp;<button onclick="createInitialOffer();" name="create-offer-button-name" title="create-offer-button-title" id="create-offer-button">Create Offer</button>
+  <h3> 4.GET Participant's SDP </h3>&nbsp;<button onclick="start();" name="start-button-name" title="start-button-title" id="start-button">Start</button>
+  <textarea id="joiner-sdp" placeholder="HERE COPY AND PASTE [3.Participant'S SDP]"></textarea>
+
+  <h3> 2.GET Offer's SDP</h3>
+  <textarea id="client-creater-sdp" placeholder="HERE COPY & PASTE [1.CREATE Offer's SDP]"></textarea>
+  <h3> 3.CREATE Participant'S SDP </h3>&nbsp;<button onclick="createResponse();" name="create-response-button-name" title="create-response-button-title" id="create-response-button">Create Response</button>
+  <textarea id="client-joiner-sdp" title="client create offer"></textarea>
+<script>
+    var connection = new RTCConnection();
+    function createInitialOffer() {
+        connection.createOffer();
+        changeInnerText("creater-sdp", connection.myOffer);
+    };
+    function createResponse() {
+        var gameIdElement = document.getElementById("client-creater-sdp");
+        connection.createAnswer(gameIdElement.value);
+        changeInnerText("client-joiner-sdp", connection.myAnswer);
+    };
+    function start() {
+        var gameIdElement = document.getElementById("joiner-sdp");
+        connection.recieveAnswer(gameIdElement.value);
+    };
+
+    function changeInnerText(labelId, newInnerText) {
+    var gameIdElement = document.getElementById(labelId);
+    if(gameIdElement !== null) {
+        gameIdElement.innerText = newInnerText;
+    }
+}
+
+</script>
 </body>
 </html>
