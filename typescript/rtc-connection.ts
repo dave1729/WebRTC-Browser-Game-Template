@@ -45,7 +45,7 @@ class RTCConnection {
     var setAnswer = function (answerDesc: RTCLocalSessionDescriptionInit | undefined) {
       that.pc.setLocalDescription(answerDesc);
     };
-    var options = { optional: [{RtpDataChannels: true}]  };
+    var options = { optional: [{RtpDataChannels: true}]  }
     this.pc.createAnswer(options).then(setAnswer);
     this.pc.onicecandidate = function(e) {
       if (e.candidate) return;
