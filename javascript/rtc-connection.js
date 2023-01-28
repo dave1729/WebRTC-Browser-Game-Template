@@ -47,9 +47,10 @@ class RTCConnection {
         };
     }
     recieveAnswer(answer) {
-        var answerx = answer.replace(/\r\n/g, ' ');
-        var answerObject = JSON.parse(answerx);
-        var answerDesc = new RTCSessionDescription(answerObject);
+        var answerObject = JSON.parse(answer);
+        // this is where it seems broken, why does this fail?
+        var thing = answerObject;
+        var answerDesc = new RTCSessionDescription(thing);
         this.pc.setRemoteDescription(answerDesc);
         this.dc.onmessage = function (e) {
             if (e.data) {

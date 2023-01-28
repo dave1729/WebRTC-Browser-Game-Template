@@ -1,8 +1,14 @@
+var role = "server";
+var offer: string;
+
 function newGame(){
     changeLabel("new-game-label", " loading... ");
 
-    var objectAsString = '{"owner": "dave","id": "poop8","value": "words and what not7"}';
-    postGame(objectAsString, printCrap);
+    var sdp = {
+        "owner": role,
+        "value": "JSON.stringify()"
+    };
+    postGame(JSON.stringify(sdp), role, printCrap);
 }
 
 function printCrap(object: any) {
@@ -17,9 +23,10 @@ function printCrap2(object: string) {
 }
 
 function joinGame(id: string) {
+    role = "client";
     var gameIdElement = document.getElementById("join-game-input");
     var gameId = gameIdElement == null ? "" : (<HTMLInputElement>gameIdElement).value;
-    getGame(gameId, printCrap2);
+    getGame(gameId, role, printCrap2);
 }
 
 function changeLabel(labelId: string, newInnerText: string) {

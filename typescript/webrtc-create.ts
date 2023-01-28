@@ -1,25 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <script type="text/javascript" src="./javascript/game-utility.js"></script>
-  <head>
-    <meta charset="utf-8">
-    <title> CREATE WebRTC channel </title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <h3> 1.CREATE Offer's SDP </h3>
-    <textarea id="creater-sdp"title="creater-sdp"></textarea>
-    <h3> 4.GET Participant's SDP <button id="start">start</button></h3>
-    <textarea id="joiner-sdp" placeholder="HERE COPY AND PASTE [3.Participant'S SDP]"></textarea>
-    <h3> CHAT </h3>
-    <div id="chat">
-        <div id="chat-screen-wp">
-            <div id="chat-screen"></div>
-        </div>
-        <div id="ct"><input id="msg" title="msg-input" disabled><button id="send" disabled>send</button></div>
-    </div>
-    <script>
-    var sdpConstraints = { optional: [{RtpDataChannels: true}]  };
-    var pc = new RTCPeerConnection(null);
-    var dc;
+var sdpConstraints = { optional: [{RtpDataChannels: true}]  };
+    var pc = new RTCPeerConnection();
+    var dc: RTCDataChannel;
     pc.oniceconnectionstatechange = function(e) {
       var state = pc.iceConnectionState;
       $('#status').html(state);
@@ -63,9 +44,3 @@
     $("#start").click(function(){start();});
     $("#msg").keypress(function(e) {if(e.which == 13) {sendMSG()}});
     $("#send").click(sendMSG);
-    </script>
-</head>
-<body>
-<h2> CREATE WebRTC channel <span id="status"> init </span></h2>
-</body>
-</html>
